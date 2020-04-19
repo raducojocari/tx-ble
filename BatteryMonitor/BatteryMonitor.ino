@@ -8,7 +8,7 @@ BLEService energyMonitorService("691263ec-5983-4034-8eea-399c82e7fa7a");
 BLEFloatCharacteristic energyUsageChar("54fd1583-b8ca-4153-a72f-92d846b041bc",
     BLERead | BLENotify);
 
-float CALIBRATION = 30;//115.1;
+float CALIBRATION = 43;
 long previousMillis = 0;
 
 void setup() {
@@ -41,7 +41,7 @@ void loop() {
     digitalWrite(LED_BUILTIN, HIGH);
 
     while (central.connected()) {
-     
+
       readEnergyUsage();
       digitalWrite(LED_BUILTIN, HIGH);
        long currentMillis = millis();
@@ -61,9 +61,9 @@ void loop() {
 void readEnergyUsage() {
   float value = emon1.calcIrms(1480);
   
-  Serial.println(value);
+  Serial.println(value*222);
 
-  energyUsageChar.writeValue(value);
+  energyUsageChar.writeValue(value*222);
 }
 
 void initialeBleService(){
